@@ -12,7 +12,7 @@ public class App {
         try {
             n = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
-            System.err.println("Error: El parametre ha de ser un numero enter");
+            System.err.println("Error: El parametre ha de ser un numero enter.");
             System.exit(2);
             return;
         }
