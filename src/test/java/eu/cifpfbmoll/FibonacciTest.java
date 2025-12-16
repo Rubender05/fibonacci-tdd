@@ -12,7 +12,6 @@ class FibonacciTest {
 
     private Fibonacci fibonacci = new Fibonacci();
 
-    // -- Tests per a la seqüència bàsica --
 
     @Test
     void fibonacciOfZeroIsZero() {
@@ -24,7 +23,6 @@ class FibonacciTest {
         assertEquals(1, fibonacci.calculate(1));
     }
 
-    // Utilitzem ParameterizedTest per provar una sèrie de valors
     @ParameterizedTest(name = "F({0}) should be {1}")
     @CsvSource({
             "2, 1",
@@ -39,7 +37,6 @@ class FibonacciTest {
         assertEquals(expected, fibonacci.calculate(input));
     }
 
-    // -- Tests de validació --
 
     @Test
     void fibonacciOfNegativeThrowsException() {

@@ -4,7 +4,7 @@ public class App {
 
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("Ús: java -jar fibonacci.jar <n>");
+            System.err.println(" java -jar fibonacci.jar <n>");
             System.exit(1);
         }
 
@@ -12,15 +12,13 @@ public class App {
         try {
             n = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
-            System.err.println("Error: El paràmetre ha de ser un número enter");
+            System.err.println("Error: El parametre ha de ser un numero enter");
             System.exit(2);
             return;
         }
 
-        // La validació del nombre negatiu es pot fer aquí o a la classe Fibonacci.
-        // Si el codi de Fibonacci no ho fes, hauríem de validar-ho aquí.
         if (n < 0) {
-            System.err.println("Error: El paràmetre ha de ser major o igual que 0");
+            System.err.println("Error: El parametre ha de ser major o igual que 0");
             System.exit(2);
         }
 
