@@ -1,17 +1,32 @@
-name: Java CI Fibonacci
+name: Java CI Fibonacci Fase 3
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    steps:
+    services:
+      db:
+        image: postgres:15
+        env:
+          POSTGRES_DB: fibodb
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: password123
+        ports:
+          - 5432:5432
 
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
       - name: Checkout del código
         uses: actions/checkout@v4
 
@@ -22,5 +37,15 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - name: Validar formato de código (Checkstyle)
+        run: mvn checkstyle:check
+
       - name: Ejecutar tests con Maven
         run: mvn test
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/fibodb
+          SPRING_DATASOURCE_USERNAME: admin
+          SPRING_DATASOURCE_PASSWORD: password123
+
+      - name: Build Docker Image
+        run: docker build -t fibo-app:latest .

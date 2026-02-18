@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:15
+    container_name: fibo_db
+    environment:
+      POSTGRES_DB: fibodb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    container_name: fibo_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/fibodb
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: password123
