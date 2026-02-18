@@ -1,7 +1,6 @@
 package eu.cifpfbmoll.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "fibonacci_records")
@@ -11,14 +10,16 @@ public class FibonacciRecord {
     private Long id;
 
     private int inputN;
-    private long result;
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private int result;
 
-    // Constructores, Getters y Setters
     public FibonacciRecord() {}
+
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
     public int getInputN() { return inputN; }
     public void setInputN(int inputN) { this.inputN = inputN; }
-    public long getResult() { return result; }
-    public void setResult(long result) { this.result = result; }
+
+    public int getResult() { return result; }
+    public void setResult(int result) { this.result = result; }
 }

@@ -11,9 +11,11 @@ public class Category {
 
     private String categoryName;
 
-    // Constructores, Getters y Setters
     public Category() {}
+
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; } // Asegúrate de que recibe (Long id)
+
     public String getCategoryName() { return categoryName; }
     public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
 }

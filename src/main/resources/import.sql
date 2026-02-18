@@ -1,4 +1,4 @@
--- 10 Registros para la tabla de Usuarios
+
 INSERT INTO users (name, email) VALUES ('Ruben Arcos', 'ruben@example.com');
 INSERT INTO users (name, email) VALUES ('Juan Perez', 'juan@example.com');
 INSERT INTO users (name, email) VALUES ('Maria Garcia', 'maria@example.com');
@@ -10,7 +10,6 @@ INSERT INTO users (name, email) VALUES ('Carlos Bo', 'carlos@example.com');
 INSERT INTO users (name, email) VALUES ('Elena Ma', 'elena@example.com');
 INSERT INTO users (name, email) VALUES ('Marc Tur', 'marc@example.com');
 
--- 10 Registros para la tabla de Categorias
 INSERT INTO categories (category_name) VALUES ('Basico');
 INSERT INTO categories (category_name) VALUES ('Intermedio');
 INSERT INTO categories (category_name) VALUES ('Avanzado');
@@ -22,7 +21,6 @@ INSERT INTO categories (category_name) VALUES ('Pruebas');
 INSERT INTO categories (category_name) VALUES ('Demo');
 INSERT INTO categories (category_name) VALUES ('Soporte');
 
--- 10 Registros para la tabla de Fibonacci
 INSERT INTO fibonacci_records (input_n, result) VALUES (0, 0);
 INSERT INTO fibonacci_records (input_n, result) VALUES (1, 1);
 INSERT INTO fibonacci_records (input_n, result) VALUES (5, 5);
