@@ -14,9 +14,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: fibonacci_db
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: password123
+          POSTGRES_DB: fibodb
         ports:
           - 5432:5432
         options: >-
@@ -26,10 +26,10 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -38,9 +38,10 @@ jobs:
       - name: Build and Test with Maven
         run: mvn clean test -Dcheckstyle.skip=true
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/fibonacci_db
-          SPRING_DATASOURCE_USERNAME: user
-          SPRING_DATASOURCE_PASSWORD: password
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/fibodb
+          SPRING_DATASOURCE_USERNAME: admin
+          SPRING_DATASOURCE_PASSWORD: password123
 
       - name: Build Docker Image
-        run: docker build -t fibonacci-app .
+        run: |
+          docker build -t fibo-app .
