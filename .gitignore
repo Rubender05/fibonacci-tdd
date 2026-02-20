@@ -26,3 +26,16 @@ Thumbs.db
 
 # Log files
 *.log
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Testing
+coverage/
+.coverage
+htmlcov/
+
+# Spring Boot
+.gradle
+build/

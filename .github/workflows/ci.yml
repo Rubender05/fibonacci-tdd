@@ -1,15 +1,15 @@
-name: Java CI Fibonacci Fase 3
+name: CI/CD Pipeline - Fibonacci TDD
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "develop" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "develop" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     services:
       postgres:
         image: postgres:15
@@ -26,7 +26,8 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -35,8 +36,26 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build and Test with Maven
-        run: mvn clean test -Dcheckstyle.skip=true
+      - name: Run Checkstyle (Code Quality)
+        run: mvn checkstyle:check
+        continue-on-error: true
+
+      - name: Run Unit Tests
+        run: mvn test -Dgroups="unit"
+        env:
+          SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
+          SPRING_DATASOURCE_USERNAME: sa
+          SPRING_DATASOURCE_PASSWORD: 
+
+      - name: Run Integration Tests
+        run: mvn test -Dgroups="integration"
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/fibodb
+          SPRING_DATASOURCE_USERNAME: admin
+          SPRING_DATASOURCE_PASSWORD: password123
+
+      - name: Run All Tests (Unit + Integration)
+        run: mvn clean test
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/fibodb
           SPRING_DATASOURCE_USERNAME: admin
@@ -44,4 +63,26 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t fibo-app .
+          docker build -t fibonacci-tdd:latest .
+          docker tag fibonacci-tdd:latest fibonacci-tdd:${{ github.sha }}
+
+      - name: Run Acceptance Tests
+        run: mvn test -Dgroups="acceptance" -Dtest="*AcceptanceTest"
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/fibodb
+          SPRING_DATASOURCE_USERNAME: admin
+          SPRING_DATASOURCE_PASSWORD: password123
+        continue-on-error: true
+
+      - name: Generate Test Report
+        if: always()
+        run: |
+          echo "Test Summary:"
+          mvn surefire-report:report
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: target/surefire-reports/
