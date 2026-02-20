@@ -40,21 +40,7 @@ jobs:
         run: mvn checkstyle:check
         continue-on-error: true
 
-      - name: Run Unit Tests
-        run: mvn test -Dgroups="unit"
-        env:
-          SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
-          SPRING_DATASOURCE_USERNAME: sa
-          SPRING_DATASOURCE_PASSWORD: 
-
-      - name: Run Integration Tests
-        run: mvn test -Dgroups="integration"
-        env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/fibodb
-          SPRING_DATASOURCE_USERNAME: admin
-          SPRING_DATASOURCE_PASSWORD: password123
-
-      - name: Run All Tests (Unit + Integration)
+      - name: Run All Tests
         run: mvn clean test
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/fibodb
@@ -65,14 +51,6 @@ jobs:
         run: |
           docker build -t fibonacci-tdd:latest .
           docker tag fibonacci-tdd:latest fibonacci-tdd:${{ github.sha }}
-
-      - name: Run Acceptance Tests
-        run: mvn test -Dgroups="acceptance" -Dtest="*AcceptanceTest"
-        env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/fibodb
-          SPRING_DATASOURCE_USERNAME: admin
-          SPRING_DATASOURCE_PASSWORD: password123
-        continue-on-error: true
 
       - name: Generate Test Report
         if: always()
