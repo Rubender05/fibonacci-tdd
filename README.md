@@ -1,13 +1,13 @@
 # Projecte Fibonacci - Fase 3 CI/CD
 
-Aplicació Java amb Spring Boot que implementa un API REST per calcular Fibonacci i gestionar usuaris i categories, amb pipeline CI/CD automàtica a GitHub Actions.
+Aplicacio Java amb Spring Boot que implementa un API REST per calcular Fibonacci i gestionar usuaris i categories, amb pipeline CI/CD automatica a GitHub Actions.
 
-## Estructura Bàsica
+## Estructura Basica
 
 **Entitats:** User, Category, FibonacciRecord  
 **Base de Dades:** PostgreSQL 15  
 **Endpoints:** 15 endpoints REST que retornen JSON  
-**Tests:** ~55 tests (unitaris, integració, aceptació)
+**Tests:** ~55 tests (unitaris, integracio, aceptacio)
 
 ## Quickstart
 
